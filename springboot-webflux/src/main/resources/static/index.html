@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Robot</title>
+  <script th:src="@{js/sockjs.min.js}"></script>
+  <script th:src="@{js/stomp.js}"></script>
+  <script th:src="@{js/jquery-3.1.1.js}"></script>
+</head>
+<body>
+
+
+<div>
+  <!--<div>
+    <button id="connect" onclick="connect();">连接</button>
+    <button id="disconnect" disabled="disabled" onclick="disconnect();">断开连接</button>
+  </div>-->
+
+  <div id="conversationDiv">
+    <label style="margin-right: 3vw">Robot</label><input type="text" id="msg"/>
+    <button id="sendName" onclick="sendMsg();">发送</button>
+    <div id="response">
+
+    </div>
+  </div>
+</div>
+
+<ul id="users">
+
+</ul>
+<script type="text/javascript">
+  /*  var eventSource = new EventSource("/msg");
+    eventSource.onmessage = function (e) {
+      var li = document.createElement("li");
+      var user = JSON.parse(e.data);
+      li.innerText = "User: " + user.id + " " + user.name;
+      document.getElementById("users").appendChild(li);
+    };*/
+
+  // 打开一个 web socket
+  var ws = new WebSocket("ws://localhost:9000/chat");
+  ws.onopen = function () {
+    // Web Socket 已连接上，使用 send() 方法发送数据
+  };
+  ws.onmessage = function (evt) {
+    var p = document.createElement("p");
+    p.innerHTML = evt.data;
+    document.getElementById("response").appendChild(p);
+  };
+
+  ws.onclose = function () {
+    // 关闭 websocket
+//      alert("连接已关闭...");
+  };
+
+  function sendMsg() {
+    var value = document.getElementById("msg").value;
+    ws.send(value);
+  }
+</script>
+</body>
+</html>
