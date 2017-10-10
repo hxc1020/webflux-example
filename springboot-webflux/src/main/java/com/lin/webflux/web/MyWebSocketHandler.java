@@ -25,8 +25,8 @@ public class MyWebSocketHandler implements WebSocketHandler {
     public Mono<Void> handle(WebSocketSession session) {
         session.receive()
                 .map(WebSocketMessage::getPayloadAsText)
-                .subscribe(s -> eventPublisher
-                        .onNext(answerMsg(s)));
+                .subscribe(s -> eventPublisher.onNext(answerMsg(s)));
+
         return session.send(message.map(session::textMessage));
     }
 
@@ -35,9 +35,9 @@ public class MyWebSocketHandler implements WebSocketHandler {
                 + "  :  " + now.getHour() + ":" + now.getMinute() + ":" + now.getSecond();
         switch (question) {
             case "你叫什么":
-                return "webSocket";
+                return "robot";
             case "what's your name":
-                return "webSocket";
+                return "robot";
             case "give me five":
                 return "5";
             case "现在几点":
@@ -47,7 +47,7 @@ public class MyWebSocketHandler implements WebSocketHandler {
             case "ping":
                 return "pong";
             case "where are you":
-                return "RepeatLink";
+                return "http://localhost:9000";
             default:
                 return "I don't know";
         }

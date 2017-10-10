@@ -25,9 +25,8 @@ public class WebRoutes {
     public RouterFunction<ServerResponse> route() {
 
         return RouterFunctions.route(
-                GET("/"), request -> {
-                    return ServerResponse.permanentRedirect(URI.create("index.html")).build();
-                }).andNest(
+                GET("/"), request -> ServerResponse.permanentRedirect(URI.create("index.html")).build())
+                .andNest(
                 accept(MediaType.TEXT_EVENT_STREAM), RouterFunctions.route(GET("/msg"), userHandler::sendMessage
                 ).andRoute(GET("/msg/{id}/{name}"), userHandler::addMsg)
         );

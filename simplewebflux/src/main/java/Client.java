@@ -23,7 +23,7 @@ public class Client {
     }
 
     public void printAllPeople() {
-        URI uri = URI.create(String.format("http://%s:%d/person", Server.HOST, Server.PORT));
+        URI uri = URI.create(String.format("http://%s:%d/customer", Server.HOST, Server.PORT));
         ClientRequest request = ClientRequest.method(HttpMethod.GET, uri).build();
 
         Flux<Customer> customers = exchange.exchange(request)
@@ -34,8 +34,8 @@ public class Client {
     }
 
     public void createPerson() {
-        URI uri = URI.create(String.format("http://%s:%d/person", Server.HOST, Server.PORT));
-        Customer jack = new Customer("lin hao", 27);
+        URI uri = URI.create(String.format("http://%s:%d/customer", Server.HOST, Server.PORT));
+        Customer jack = new Customer("大明", 21);
 
         ClientRequest request = ClientRequest.method(HttpMethod.POST, uri)
                 .body(BodyInserters.fromObject(jack)).build();

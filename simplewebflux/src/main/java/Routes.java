@@ -16,11 +16,11 @@ public class Routes {
         CustomerHandler handler = new CustomerHandler(repository);
 
         return nest(
-                path("/person"),
+                path("/customer"),
                 nest(accept(APPLICATION_JSON),
-                        route(GET("/{id}"), handler::getPerson)
-                                .andRoute(method(HttpMethod.GET), handler::listPeople)
-                ).andRoute(POST("/").and(contentType(APPLICATION_JSON)), handler::createPerson)
+                        route(GET("/{id}"), handler::getCustomer)
+                                .andRoute(method(HttpMethod.GET), handler::listCustomer)
+                ).andRoute(POST("/").and(contentType(APPLICATION_JSON)), handler::saveCustomer)
         ).andNest(
                 path("/product"),
                 route(path("/"), serverRequest ->

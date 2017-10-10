@@ -14,7 +14,7 @@ public class CustomerHandler {
         this.repository = repository;
     }
 
-    public Mono<ServerResponse> getPerson(ServerRequest request) {
+    public Mono<ServerResponse> getCustomer(ServerRequest request) {
         int personId = Integer.valueOf(request.pathVariable("id"));
         Mono<ServerResponse> notFound = ServerResponse.notFound().build();
         Mono<Customer> personMono = this.repository.getById(personId);
@@ -24,12 +24,12 @@ public class CustomerHandler {
     }
 
 
-    public Mono<ServerResponse> createPerson(ServerRequest request) {
+    public Mono<ServerResponse> saveCustomer(ServerRequest request) {
         Mono<Customer> person = request.bodyToMono(Customer.class);
         return ServerResponse.ok().build(this.repository.save(person));
     }
 
-    public Mono<ServerResponse> listPeople(ServerRequest request) {
+    public Mono<ServerResponse> listCustomer(ServerRequest request) {
         Flux<Customer> people = this.repository.all();
         return ServerResponse.ok().contentType(APPLICATION_JSON).body(people, Customer.class);
     }
